@@ -175,3 +175,72 @@ In the OnCollisionEnter2D() method, when the bullet collider enters a collision 
   ![Paso 3](imgs/Captura42.png)
   
 ## Level exit portal
+To go from one level, a prefab has been developed to go from one level to another using the LevelExit script and in Build Settings configuring the order of the levels
+
+ ![Paso 3](imgs/Captura43.png)
+ 
+ ![Paso 3](imgs/Captura45.png)
+ 
+The levelExit script it has a SerializeField variable for levelLoadDelay, which is the amount of time, in seconds, that the game will wait before loading the next level.
+
+In the OnTriggerEnter2D() method, when the player's collider enters the trigger of the level exit, it checks if the collider has the "Player" tag, if it has it starts the LoadNextLevel() coroutine.
+
+The LoadNextLevel() coroutine starts by waiting for the amount of seconds specified in levelLoadDelay, it then gets the build index of the current active scene, increases it by 1 to get the next scene, and checks if the next scene is the last scene in the build settings. If it is, it sets the nextSceneIndex to 0 (looping back to the first scene)
+
+It also calls the ResetScenePersist() method on the ScenePersist script, this script is used to persist certain objects or information between scenes, like the score. Finally, it loads the next scene using the SceneManager.LoadScene() method, with the nextSceneIndex as the parameter.
+
+ ![Paso 3](imgs/Captura44.png)
+ 
+ ## Game Session Controller
+It has been established that the player will have lives once he dies in a level, he starts from that level at the beginning with one less life and so on until he loses all of them, if he loses all he returns to level 1 with everything from 0, this implies recharging everything he has. There are in the scenes in its origin, it also includes the score and the Progress level, for this I create a GameSession script and an empty object to which I will assign that script, to this same I will assign a canvas with the lives and score of the player.
+
+ ![Paso 3](imgs/Captura46.png)
+ 
+ ![Paso 3](imgs/Captura47.png)
+ 
+In the Game Session script it has SerializeField variables for playerLives, which is the number of lives the player has, score which is the current score of the player, livesText and scoreText which are TextMeshProUGUI components that display the number of lives and the score respectively.
+
+In the Awake() method, the script checks if there are more than one GameSession objects in the scene, if there are it destroys the current one to avoid duplicates, otherwise it sets the GameSession object to not be destroyed when a new scene is loaded using DontDestroyOnLoad(gameObject).
+
+In the Start() method, the script sets the text of the livesText and scoreText components to the playerLives and score variables respectively, using the ToString() method.
+
+The ProcessPlayerDeath() method is called when the player dies, it checks if the player has more than one life, if it does it calls the TakeLife() method, otherwise it calls the ResetGameSession() method.
+
+The AddToScore() method adds the pointsToAdd parameter to the score variable and sets the text of the scoreText component to the current score.
+
+ ![Paso 3](imgs/Captura48.png)
+ 
+ ![Paso 3](imgs/Captura49.png)
+ 
+ ## Coins
+Some coins have been added so that the player can collect them as a points system, which when collected disappears and adds 100 points. This has been done by adding some animations to the coins and their logic through the CoinPickup script. For testing, a sound was added when the player takes the coin.
+
+ ![Paso 3](imgs/Captura51.png)
+ 
+ ![Paso 3](imgs/Captura52.png)
+ 
+The ConPickup script it has a SerializeField variable for coinPickupSFX, which is an AudioClip that plays when the coin is picked up, and pointsForCoinPickup, which is the number of points that the player will receive for picking up the coin.
+
+It also has a private boolean variable wasCollected that is used to track if the coin has been picked up or not.
+
+In the OnTriggerEnter2D() method, when the player's collider enters the trigger of the coin, it checks if the collider has the "Player" tag and if the coin has not been collected yet, if both conditions are met, it sets the wasCollected variable to true, it adds pointsForCoinPickup to the score using the AddToScore() method of the GameSession script, plays the coinPickupSFX clip using the AudioSource.PlayClipAtPoint() method at the position of the main camera, disables the game object and finally it destroys the coin game object.
+
+ ![Paso 3](imgs/Captura50.png)
+ 
+ ## Canvas
+ I have mentioned the canvas before but here is an image of what it looks like.
+ 
+ ![Paso 3](imgs/Captura53.png)
+ 
+ ## Scenes Persist
+To complement the GameSession and keep what is in the scene or a Scene Persist has not been established, which we add the Pickups such as coins and enemies, the logic is established through the ScenePersist Script.
+
+ ![Paso 3](imgs/Captura54.png)
+ 
+ ![Paso 3](imgs/Captura55.png)
+ 
+In the script ScenePersist in the Awake() method, the script checks if there are more than one ScenePersist objects in the scene, if there are it destroys the current one to avoid duplicates, otherwise it sets the ScenePersist object to not be destroyed when a new scene is loaded using DontDestroyOnLoad(gameObject).
+
+The ResetScenePersist() method is called when the player's lives reach 0, it destroys the current ScenePersist object, this is useful when you want to reset the game to its initial state and not have any objects from previous scenes still active in the scene.
+
+ ![Paso 3](imgs/Captura56.png)
