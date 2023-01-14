@@ -135,8 +135,42 @@ In the FlipEnemyFacing() method, the script changes the localScale of the enemy'
 
  ![Paso 3](imgs/Captura34.png)
  
- ## Hazards
+## Hazards
 As a new element on the map, a new layer has been added to the Tilemap called hazards, which is where we will place the spikes where when touching them the player will die, following the same as explained so far with the enemy.
 
  ![Paso 3](imgs/Captura35.png)
+ 
+## Bullets
+Something that we have overlooked is that the player has the possibility of shooting as you will have already observed in the images of the playermovement script, this has been done by creating an empty object which we place in front of the player, the bullets will be sprites of the player himself but in red, using the input system that will be assigned to the shot by the left click of the mouse, I turn the bullets into a prefab to this prefab I add the bullet script. 
+
+ ![Paso 3](imgs/Captura36.png)
+ 
+ ![Paso 3](imgs/Captura37.png)
+ 
+ ![Paso 3](imgs/Captura38.png)
+ 
+The bullet script in the Start() method, the script obtains the Rigidbody2D component from the bullet's game object and assigns it to the myRigidbody variable, it also get a reference to the player gameobject using FindObjectOfType<PlayerMovement>() method, and it sets the xSpeed variable by multiplying the player's localScale.x by the bulletSpeed variable.
+
+In the Update() method, the script sets the velocity of the bullet's rigidbody to a new Vector2 with the x component set to the xSpeed variable and the y component set to 0, this makes the bullet to move horizontally in the direction the player is facing.
+
+In the OnTriggerEnter2D() method, when the bullet collider enters a trigger, it checks if the trigger object has the "Enemy" tag, if it has it destroys the object, and finally it destroys the bullet gameobject.
+
+In the OnCollisionEnter2D() method, when the bullet collider enters a collision with another object, it destroys the bullet gameobject.
+ 
+ ![Paso 3](imgs/Captura39.png)
+ 
+## Levels
+  The levels designed are the following:
+ 
+  level 1
+ 
+  ![Paso 3](imgs/Captura40.png)
+ 
+  level 2
+ 
+  ![Paso 3](imgs/Captura41.png)
+ 
+  level 3
+ 
+  ![Paso 3](imgs/Captura42.png)
  
