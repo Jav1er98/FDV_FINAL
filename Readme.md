@@ -2,7 +2,7 @@
 
 The project is a 2D side-scrolling platform game that will have a character who runs, jumps and avoids obstacles and needs to go from the beginning to the end of the level. It will have a little loading system so that when you finish a particular level it will load into the next level and so on using the unit TileMap system.
 
-The first thing that has been done in the search for some spirtes, these are the sprites used for this project:
+The first thing that has been done in the search for some sprites, these are the sprites used for this project:
 
  ![Paso 1](imgs/Captura5.png)
  
