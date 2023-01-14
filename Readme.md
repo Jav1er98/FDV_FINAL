@@ -173,4 +173,5 @@ In the OnCollisionEnter2D() method, when the bullet collider enters a collision 
   level 3
  
   ![Paso 3](imgs/Captura42.png)
- 
+  
+## Level exit portal
