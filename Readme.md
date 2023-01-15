@@ -246,4 +246,4 @@ The ResetScenePersist() method is called when the player's lives reach 0, it des
  ![Paso 3](imgs/Captura56.png)
  
  ## Video
-If you want to see the explanation of this readme in video click here:
+If you want to see the explanation of this readme in video click here: https://www.youtube.com/watch?v=qFBLtNjlTq4
